@@ -8,25 +8,25 @@ import (
 )
 
 func main() {
-	server := configure_server()
-	configure_routes(server)
-	server.Logger.Fatal(server.Start(":8080"))
+	e := configure_server()
+	configure_routes(e)
+	e.Logger.Fatal(e.Start(":8080"))
 }
 
 func configure_server() *echo.Echo {
-	server := echo.New()
+	e := echo.New()
 
-	server.Use(middleware.CSRF())
-	server.Use(middleware.Gzip())
-	server.Use(middleware.Logger())
-	server.Use(middleware.Recover())
-	server.Use(middleware.RemoveTrailingSlash())
-	server.Use(middleware.RequestID())
-	server.Use(middleware.Secure())
+	e.Use(middleware.CSRF())
+	e.Use(middleware.Gzip())
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	e.Use(middleware.RemoveTrailingSlash())
+	e.Use(middleware.RequestID())
+	e.Use(middleware.Secure())
 
-	return server
+	return e
 }
 
-func configure_routes(server *echo.Echo) {
-	server.GET("/", handlers.HelloWorld)
+func configure_routes(e *echo.Echo) {
+	e.GET("/", handlers.HelloWorld)
 }
